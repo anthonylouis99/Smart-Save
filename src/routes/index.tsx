@@ -25,7 +25,7 @@ const router = createBrowserRouter([
 
   {
     path: "/",
-    element: <Navigate to="/dashboard" replace />,
+    element: <Navigate to="/signIn" replace />,
   },
   {
     path: "/signIn",
