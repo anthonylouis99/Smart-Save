@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 
 import { LoadingSpinner } from "../components/common/loader/Loader";
-
 import { DashBoardLayout } from "../Layout/DashboardLayout";
 import { Items } from "../Pages/dashBoard/items";
 import { Transactions } from "../Pages/dashBoard/Transactions";
@@ -23,9 +22,10 @@ import AddFund from "../Pages/dashBoard/addFund";
 import AddSavings from "../Pages/dashBoard/addSavings";
 
 const router = createBrowserRouter([
+
   {
-    path: "*",
-    element: <AuthPage />,
+    path: "/",
+    element: <Navigate to="/signIn" replace />,
   },
   {
     path: "/signIn",
@@ -35,10 +35,8 @@ const router = createBrowserRouter([
     path: "/signUp",
     element: <SignUp />,
   },
-  {
-    path: "/",
-    element: <Navigate to="/signIn" replace />,
-  },
+
+
   {
     path: "/dashboard",
     element: (
@@ -59,7 +57,6 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
-
   {
     path: "/settings",
     element: (
@@ -110,7 +107,6 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
-
   {
     path: "/add-savings",
     element: (
@@ -131,11 +127,23 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
+
+
+  {
+    path: "*",
+    element: <Navigate to="/signIn" replace />,
+  },
 ]);
 
 export const AppRoutes = () => {
   return (
-    <Suspense fallback={<div className="h-screen w-screen"><LoadingSpinner text="Loading...."/></div>}>
+    <Suspense
+      fallback={
+        <div className="h-screen w-screen flex items-center justify-center">
+          <LoadingSpinner text="Loading..." />
+        </div>
+      }
+    >
       <RouterProvider router={router} />
     </Suspense>
   );
