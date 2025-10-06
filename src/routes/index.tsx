@@ -1,7 +1,7 @@
 // src/routes/index.tsx
 import { Suspense } from "react";
 import {
-  createBrowserRouter,
+  createHashRouter,
   Navigate,
   RouterProvider,
 } from "react-router-dom";
@@ -21,7 +21,10 @@ import Investments from "../Pages/dashBoard/invest";
 import AddFund from "../Pages/dashBoard/addFund";
 import AddSavings from "../Pages/dashBoard/addSavings";
 
-const router = createBrowserRouter([
+
+
+
+const router = createHashRouter([
 
   {
     path: "/",
