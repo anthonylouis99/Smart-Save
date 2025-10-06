@@ -9,11 +9,6 @@ import { Plus } from "lucide-react";
 import {useMemo} from "react"
 // import { useAuth } from "../../context/AuthProvider/auth";
 import { useNavigate } from "react-router-dom";
-
-
-
-
-
 export function Items() {
   const { items, isLoading } = useGetItems({ itemGetter: "SmallCardsItems" });
   const { items: savings, isLoading: loadingSavings } = useGetItems({ itemGetter: "Savings" });
@@ -56,9 +51,6 @@ const remainingBalance = useMemo(() => {
 }, [savingsBalance, allocatedPercentage]);
 
 
-  
-
-
  if(isGettingData) return<LoadingSpinner text="Getting data......"/>
   return (
     <div>
@@ -67,14 +59,14 @@ const remainingBalance = useMemo(() => {
         <div className=" flex flex-col gap-6 border-b border-gray-200 mt-4">
  
 <div className=" grid md:grid-cols-2 lg:grid-cols-4 gap-2 pb-8">
-       
-            <div 
+              
+     <div 
            
            className="border-r border-gray-200 flex-1 pr-2">
             <TopCard  icon={<Plus size={16}/>}  currency={true} onclick={()=>navigate('/add-savings')} buttonText="Save"
             className={'bg-[var(--card-background-light)] rounded-l-lg'} Title={"Total Savings"} 
              balance={ savingsBalance }
-        underText={'save some more'}/>
+             underText={'save some more'}/>
         
     </div>
 
