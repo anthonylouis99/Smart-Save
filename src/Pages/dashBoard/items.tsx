@@ -8,7 +8,7 @@ import { type cardItems } from "./dashBoard";
 import { Plus } from "lucide-react";
 import {useMemo} from "react"
 // import { useAuth } from "../../context/AuthProvider/auth";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 
 

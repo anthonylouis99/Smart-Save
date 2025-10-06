@@ -10,7 +10,7 @@ import Button from "../../components/common/Button/Button";
 import { useAuth } from "../../context/AuthProvider/auth";
 import { useGetItems } from "../../components/hooks/fireBaseFunctions/getFile";
 // import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 // import { dashboardItemsgetter,docsGetter } from "../../FireBase";
 
   export type cardItems = {
