@@ -131,7 +131,7 @@ const router = createBrowserRouter([
 
   {
     path: "*",
-    element: <Navigate to="/" replace />,
+    element: <Navigate to="/signIn" replace />,
   },
 ]);
 
