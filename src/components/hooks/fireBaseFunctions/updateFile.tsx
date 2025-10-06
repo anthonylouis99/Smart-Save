@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { doc, updateDoc, increment } from "firebase/firestore";
 import { db } from "../../../FireBase";
@@ -31,7 +32,7 @@ export const useUpdateCard = ({ itemGetter, docId }: UpdateCardOptions) => {
 
       const ref = doc(db, "users", userId, itemGetter, docId);
 
-      const updateData: Record<string, unknown> = { ...extras };
+      const updateData: any = { ...extras };
 
       if (operation === "add") {
         updateData[field] = increment(amount);
@@ -41,7 +42,10 @@ export const useUpdateCard = ({ itemGetter, docId }: UpdateCardOptions) => {
         updateData[field] = amount;
       }
 
-      await updateDoc(ref, updateData);
+
+await updateDoc(ref, updateData as any);
+
+
       console.log(`Updated ${field} for user ${userId}: ${operation} ${amount}`);
     },
     onSuccess: (_, variables) => {
