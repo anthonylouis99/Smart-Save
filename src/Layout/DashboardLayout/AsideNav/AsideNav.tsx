@@ -40,14 +40,14 @@ setSidebarOpen(false)
       
    
       <div className="flex items-center gap-2 p-4 border-b">
-        <img src="/logo.png" alt="logo" className="h-7 w-7 object-contain" />
+        <img src="/logo.png" alt="logo" className="h-10 w-10 object-contain" />
         { sideBarOpen&&
-        < motion.p 
+        < motion.small 
         animate={{opacity:1}}
         initial={{opacity:0}}
         transition={{duration:0.3, ease:'easeInOut', delay:0.2}}
         className="font-bold text-lg text-gray-800">Smart Save
-        </motion.p>}
+        </motion.small>}
       </div>
 
       {/* Main Navigation */}
