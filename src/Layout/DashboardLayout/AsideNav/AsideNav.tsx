@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { LogOut } from "lucide-react";
 import { UseSwitch } from "../../../context/switchContext";
 import { useWindowSizeCategory } from "../../../lib/util";
-import LogOutModal from "../../../components/modules/auth/logOut";
+import LogOutModal from "../../../Pages/modules/auth/logOut";
 import { NavLink } from "react-router-dom";
 
 
@@ -39,8 +39,8 @@ setSidebarOpen(false)
 
       
    
-      <div className="flex items-center gap-2 p-4 border-b">
-        <img src="/logo.png" alt="logo" className="h-10 w-10 object-contain" />
+      <div className="flex items-center p-4 border-b">
+        <img src="/logo.png" alt="logo" className="h-8 w-10 object-contain" />
         { sideBarOpen&&
         < motion.small 
         animate={{opacity:1}}

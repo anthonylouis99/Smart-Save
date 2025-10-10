@@ -44,7 +44,7 @@ const{items}=useGetItems({itemGetter:"dashboard/Plans/items"})
 
 
   const onSubmit = async (data:FormData) => { 
-        if(Number(data.allocation) - allocatedPercentage===0)return(
+        if(Number( allocatedPercentage===100))return(
         toast.error("You have used 100% allocation")
        )
     if (Number(data.allocation) + allocatedPercentage> 100  )return(

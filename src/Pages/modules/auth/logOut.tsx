@@ -4,7 +4,7 @@ import React from "react";
 import { app } from "../../../FireBase";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import PopOverModal from "../../common/Modal/modal";
+import PopOverModal from "../../../components/common/Modal/modal";
 // import { useState } from 'react';
 interface LogOutProps {
   onLogout: () => void;

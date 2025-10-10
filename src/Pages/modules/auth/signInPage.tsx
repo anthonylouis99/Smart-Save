@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
-import Button from "../../common/Button/Button";
-import Input from "../../Input/Input";
+import Button from "../../../components/common/Button/Button";
+import Input from "../../../components/Input/Input";
 import { Eye,EyeClosed } from "lucide-react";
 // import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid"; 
 // Update the import path below to the correct location of your firebase config file
@@ -13,7 +13,7 @@ import {
   getAuth,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import TickComponent from "../../common/TickComp/tickComponent";
+import TickComponent from "../../../components/common/TickComp/tickComponent";
 import toast from 'react-hot-toast';
 // import { useDarkMode } from "../../hooks/darkMode/darkMode";
 //  import { FirebaseError } from "firebase/app";
@@ -87,10 +87,10 @@ return (
      <div className='responsive-card'> 
         
          <div className=" w-full flex justify-center transition-all duration-300 text-2xl">
-         <img  className="h-[120px] w-[120px] md:h-[160px] md:w-[160px] lg:h-[200px] lg:w-[200px]" src="/logo.png" alt=" Logo" />   
+         <img  className="h-[80px] w-[120px] md:h-[160px] md:w-[160px] lg:h-[200px] lg:w-[200px]" src="/logo.png" alt=" Logo" />   
          </div>
 
-        <h2 className="text-center text-xl text-[var(--card-text)]  md:text-2xl font-semibold">
+        <h2 className="text-center text-gray-600 text-xl text-[var(--card-text)]  md:text-2xl font-semibold">
          Smart Save
         </h2>
 

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
-import Button from "../../common/Button/Button";
-import Input from "../../Input/Input";
+import Button from "../../../components/common/Button/Button";
+import Input from "../../../components/Input/Input";
 import { Eye,EyeClosed } from "lucide-react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,7 +17,7 @@ import {
 } from "firebase/auth";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import TickComponent from "../../common/TickComp/tickComponent";
+import TickComponent from "../../../components/common/TickComp/tickComponent";
 import toast from 'react-hot-toast';
 // import { useDarkMode } from "../../hooks/darkMode/darkMode";
 const auth = getAuth(app);

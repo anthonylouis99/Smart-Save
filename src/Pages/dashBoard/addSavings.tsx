@@ -66,6 +66,7 @@ const onSubmit = async (data: FundFormData) => {
       ]);
 
       if (!mainSnap.exists()) {
+         setisLoading(false)
         throw new Error("Main balance not found");
       }
 
@@ -76,7 +77,9 @@ const onSubmit = async (data: FundFormData) => {
 
 
       if (amountToSave > currentBalance) {
+        setisLoading(false)
         throw new Error("Insufficient balance");
+        
       }
 
 

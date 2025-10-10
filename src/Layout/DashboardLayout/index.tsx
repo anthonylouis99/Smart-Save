@@ -1,8 +1,9 @@
 
 import { type ReactNode } from "react";
+import { useMemo } from "react";
 import { AsideNav } from "./AsideNav/AsideNav";
 import { NavBar } from "./NavBar/nav";
-// import { UseSwitch } from "../../context/switchContext";
+import { useWindowSizeCategory } from "../../lib/util";
 
 type Props = {
   children?: ReactNode;
@@ -10,7 +11,8 @@ type Props = {
 };
 
 export const DashBoardLayout = ({ children }: Props) => {
-  // const { sideBarWidth } = UseSwitch();
+  const Window=useWindowSizeCategory()
+  const small=useMemo(()=>(Window < 'small'),[Window])
 
  
 
@@ -18,9 +20,9 @@ export const DashBoardLayout = ({ children }: Props) => {
     <div className="flex h-screen w-screen bg-gray-200">
 
       <div className="w-full h-full gap-1 flex">
-        <aside>
+        {small&&<aside>
           <AsideNav />
-        </aside>
+        </aside>}
 
         <main className="flex-1 relative bg-white rounded-xl overflow-hidden flex flex-col">
 

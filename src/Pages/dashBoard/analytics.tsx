@@ -3,7 +3,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // import { authenticator } from "../../FireBase/index";
 import { DashboardHeader } from "../../components/Headers/dashBoardHeader";
-import { AnimatedBarChart,AnimatedPieChart,AnimatedDoughnutChart } from "../../components/charts/bar";
+import { AnimatedLineChart ,AnimatedBarChart} from "../../components/charts/bar";
 
 
 
@@ -18,13 +18,13 @@ export function Analytics() {
 
 <div className="bg-white p-4 rounded-lg shadow-lg">
     {/* <h2 className="text-sm font-semibold mb-4">Category Distribution</h2> */}
-         <AnimatedBarChart />
+         <AnimatedLineChart />
   </div>
 
 
   <div className="bg-white p-4 rounded-lg shadow-lg">
     {/* <h2 className="text-lg font-semibold mb-4">Category Distribution</h2> */}
-    <AnimatedPieChart />
+    <AnimatedLineChart />
   </div>
 
 
@@ -32,7 +32,7 @@ export function Analytics() {
 
   <div className="bg-white p-4 rounded-lg shadow-lg">
     {/* <h2 className="text-lg font-semibold mb-4">Category Distribution</h2> */}
-     <AnimatedDoughnutChart/> 
+     <AnimatedBarChart/> 
   </div>
 
 </div>

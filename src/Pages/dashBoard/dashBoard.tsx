@@ -1,6 +1,6 @@
 // import { useCardData } from "../../API";
 import { TopCard,SmallCards } from "../../components/cards/Cards";
-import { AnimatedBarChart,AnimatedPieChart } from "../../components/charts/bar";
+import { AnimatedLineChart,AnimatedBarChart } from "../../components/charts/bar";
 import { Wallet2,Plus } from "lucide-react";
 import { Tables } from "../../components/Tables";
 import { LoadingSpinner } from "../../components/common/loader/Loader";
@@ -9,9 +9,8 @@ import transactionData from '../../transactiondata'
 import Button from "../../components/common/Button/Button";
 import { useAuth } from "../../context/AuthProvider/auth";
 import { useGetItems } from "../../components/hooks/fireBaseFunctions/getFile";
-// import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { dashboardItemsgetter,docsGetter } from "../../FireBase";
+
 
   export type cardItems = {
   id: string;
@@ -129,7 +128,7 @@ onclick={()=>navigate('/add-fund')}
   </div>
 
   {/* {Crads and investments} */}
-<div className="flex gap-4"> 
+<div className="grid md:grid-cols-2"> 
 {loadingSmallCards?<LoadingSpinner/>:
 <div className="flex-1 flex-col gap-4 flex border border-gray-200 rounded-lg p-4">
 <div className="w-full flex justify-between">
@@ -184,17 +183,22 @@ Your Saving Plans
 </div>
 
 
-<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
-  <div className="bg-white lg:col-span-2 md:col-span-1 p-4 rounded-lg shadow-lg">
-    <h2 className="text-lg font-semibold mb-4">Savings Overview</h2>
-    <AnimatedBarChart />
+<div className="grid md:grid-cols-2 gap-4">
+  <div className="bg-white h-[250px] sm:h-[300px] md:h-[350px] flex-1 p-4 rounded-lg shadow-lg">
+    <p className="text-lg font-semibold mb-4">Savings Overview</p>
+    <div className="">
+      <AnimatedLineChart />
+    </div>
   </div>
 
-  <div className="bg-white p-4 rounded-lg shadow-lg">
+  <div className="bg-white p-4 h-[250px] sm:h-[300px] md:h-[350px] flex-1 rounded-lg shadow-lg">
     <h2 className="text-lg font-semibold mb-4">Category Distribution</h2>
-    <AnimatedPieChart />
+    <div className="">
+      <AnimatedBarChart />
+    </div>
   </div>
-</div> 
+</div>
+
 
 <Tables columns={columns} data={transactionData} />
 

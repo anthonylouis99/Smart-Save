@@ -30,9 +30,9 @@ export const Dropdown = ({ propArray = [], showDropDown, setShowDropDown }: Prop
   }, [setShowDropDown]);
 
   return (
-    <div ref={dropdownRef} className="relative z-60 w-max">
+    <div ref={dropdownRef} className=" z-60 top-20 absolute w-max">
       <div
-        className={`flex flex-col bg-white shadow-lg rounded-md overflow-hidden transition-all duration-300 ${
+        className={`flex flex-col bg-white shadow-lg rounded-md  transition-all duration-300 ${
           showDropDown ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
       >
