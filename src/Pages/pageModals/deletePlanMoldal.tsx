@@ -17,7 +17,7 @@ interface LogOutProps {
 export const DeletePlanModal: React.FC<LogOutProps> = ({ isOpen, onClose,id,isloading }) => {
 const {user}=useAuth()
 const {isDeleting,deleteItem,error}=useDeleteItem()
-const {refetch}=useGetItems({itemGetter:'SmallCardsItems'})
+const {refetch}=useGetItems({itemGetter:'dashboard/Plans/items'})
 
 
 const handleDelete = async () => {
@@ -25,7 +25,7 @@ const handleDelete = async () => {
       toast.error("User not authenticated.");
       return;}
   try {
-        await deleteItem({userId:user?.uid, id});
+        await deleteItem({userId:user?.uid,path:`dashboard/Plans/items`, id});
         toast.success("Plan deleted successfully!");
         onClose()
         refetch()

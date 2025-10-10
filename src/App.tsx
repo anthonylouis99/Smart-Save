@@ -16,22 +16,20 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <>
-     
-     <ErrorBoundary>
+  <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
-     <AuthProvider>
-    
-    <SearchProvider>
-    <ThemeProvider>
-        <SideBarProvider>
-      <AppRoutes />
-     <Toaster position="top-right" reverseOrder={false} />
-      </SideBarProvider>
-    </ThemeProvider>
-  </SearchProvider>
+      <AuthProvider>
+        <SearchProvider>
+          <ThemeProvider>
+           <SideBarProvider>
+         <AppRoutes />
+         <Toaster position="top-right" reverseOrder={false} />
+          </SideBarProvider>
+         </ThemeProvider>
+       </SearchProvider>
      </AuthProvider>
-     </QueryClientProvider>
-     </ErrorBoundary>
+   </QueryClientProvider>
+ </ErrorBoundary>
 
 
     </>

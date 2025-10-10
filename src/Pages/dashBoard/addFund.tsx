@@ -24,10 +24,7 @@ type FundFormData = z.infer<typeof fundSchema>;
 
 const AddFund: React.FC = () => {
   const { user } = useAuth(); 
-   const { updateCard, isLoading, error } = useUpdateCard({
-    itemGetter: "DashboardData",
-    docId: "bwt4qc3UF3IzKlfWRv0E", 
-  });
+   const { updateCard, isLoading, error } = useUpdateCard({itemGetter: "dashboard/MainBalance" });
 
 const navigate=useNavigate()
 
@@ -48,7 +45,7 @@ try {
 {
 
       userId: user?.uid,
-        field: "Main-balance",
+        field: "amount",
         amount: Number(data.amount),
         extras: { note:  data.note  },
         operation: "add"

@@ -17,7 +17,7 @@ export const DashBoardLayout = ({ children }: Props) => {
   return (
     <div className="flex h-screen w-screen bg-gray-200">
 
-      <div className="w-full h-full px-4 gap-4 flex">
+      <div className="w-full h-full gap-1 flex">
         <aside>
           <AsideNav />
         </aside>

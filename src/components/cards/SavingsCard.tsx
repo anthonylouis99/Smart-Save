@@ -45,28 +45,30 @@ completed,
 const{user}=useAuth()
 
 const {deleteItem,isDeleting,error:deleteError}=useDeleteItem()
+
 const { updateCard, isLoading, error } = useUpdateCard({
-    itemGetter: "SmallCardsItems",
-    docId: id, 
+    itemGetter: `dashboard/Plans/items/${id}`,
   });
+  
 
   const { updateCard:upDateBalance, isLoading:loadingBalance, error:balanceError } = useUpdateCard({
-    itemGetter: "DashboardData",
-    docId: 'bwt4qc3UF3IzKlfWRv0E', 
+    itemGetter: "dashboard/MainBalance",
+    // docId: 'bwt4qc3UF3IzKlfWRv0E', 
   });
 
   const { updateCard:upDateSavedBalance, isLoading:loadingSavedBalance, error:SavedbalanceError } = useUpdateCard({
-    itemGetter: "Savings",
-    docId: '16a9hCWLD3B8HeTjdveH', 
+    itemGetter: "dashboard/SavingsBalance",
+    // docId: '16a9hCWLD3B8HeTjdveH', 
   });
 
-  const{refetch}=useGetItems({itemGetter:"SmallCardsItems"})
-   
+  const{refetch}=useGetItems({itemGetter:"dashboard/Plans/items"})
+    const{refetch:getDash}=useGetItems({itemGetter:"dashboard"})
+     const{items:item}=useGetItems({itemGetter:`dashboard/Plans/items`})
 
   const [tooltipPos, setTooltipPos] = useState<number | null>(null);
   const [currentSsving,setcurrentSaving]=useState(AmmountSaved)
   const [EditCardModalOpen,setEditCardModalOpen]=useState(false)
-//   const [AddFundModalOpen,setAddFundModalOpen]=useState(false)
+  // const [targetId,settargetId]=useState('')
   const [DeletePlanModalOpen,setDeletePlanModalOpen]=useState(false)
 
   const progress = useMemo(() => {
@@ -94,13 +96,13 @@ const handleDelete = async () => {
   try {
       await upDateBalance({
         userId: user?.uid,
-        field: "Main-balance",
+        field: "amount",
         amount: Number(target),
         extras: { note: "Savings added" },
         operation: "add"
       });
 
-      toast.success("Card marked as completed!");
+      // toast.success("Card marked as completed!");
     } catch (err: unknown) {
       console.error(err);
       toast.error(
@@ -116,13 +118,13 @@ const handleDelete = async () => {
   try {
       await upDateSavedBalance({
        userId: user?.uid,
-        field: "Savings",
+        field: "amount",
         amount: Number(target),
         extras: { note: "Savings added" },
         operation: "subtract"              
   });
 
-      toast.success("Card marked as completed!");
+      // toast.success("Card marked as completed!");
     } catch (err: unknown) {
       console.error(err)
       toast.error(
@@ -135,7 +137,9 @@ const handleDelete = async () => {
     }
 
 
-    await deleteItem({ userId: user?.uid, id });
+    await deleteItem({ userId: user?.uid, path:`dashboard/Plans/items`,id });
+    refetch()
+    getDash()
     if (!error) toast.success("Plan withdrawen successfully!");
     else toast.error(
         typeof deleteError === "string"
@@ -144,6 +148,7 @@ const handleDelete = async () => {
           ? deleteError.message
           : "Failed to update card."
       );
+
   };
 
 
@@ -191,7 +196,7 @@ setcurrentSaving(target)
 
 
 
-const planComplete=completed==='completed'
+const planComplete=completed ==='completed'
 
 
 const stars="*****"
@@ -245,8 +250,7 @@ return (
         variant="primary"
         leftIcon={ <Pencil size={15} />}
         onClick={()=>{setEditCardModalOpen(true)
-
-          
+    
         }}
         >
        
@@ -328,7 +332,7 @@ return (
             </Button>
           }
 
-          <EditCardModal isloading={loading}  id={id} isOpen={EditCardModalOpen}  onclose={()=>setEditCardModalOpen(false)}/>
+          <EditCardModal singleItem={item} isloading={loading}  id={id} isOpen={EditCardModalOpen}  onclose={()=>setEditCardModalOpen(false)}/>
         <DeletePlanModal isloading={loading} id={id} isOpen={DeletePlanModalOpen} onClose={()=>setDeletePlanModalOpen(false)}/>
        {/* <AddFundModal id={id}  savingBalance={Number(remainingBalance)} isloading={loading}  isOpen={AddFundModalOpen} onClose={()=>setAddFundModalOpen(false)}/> */}
     </div>

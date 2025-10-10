@@ -10,18 +10,18 @@ import {useMemo} from "react"
 // import { useAuth } from "../../context/AuthProvider/auth";
 import { useNavigate } from "react-router-dom";
 export function Items() {
-  const { items, isLoading } = useGetItems({ itemGetter: "SmallCardsItems" });
-  const { items: savings, isLoading: loadingSavings } = useGetItems({ itemGetter: "Savings" });
+  const { items, isLoading } = useGetItems({ itemGetter: "dashboard/Plans/items" });
+  const { items: savings, isLoading: loadingSavings } = useGetItems({ itemGetter: "dashboard" });
   const isGettingData=isLoading||loadingSavings;
-
+  const mainsavings = savings.find(item => item.id === "SavingsBalance");
 
 
 const stars='****'
   // const {user}=useAuth()
   const navigate =useNavigate()
-  const totalSaved = savings && savings.length > 0 
-  ? Number(savings[0].Savings ?? 0) 
-  : 0;
+  // const totalSaved = savings && savings.length > 0 
+  // ? Number(savings[0].Savings ?? 0) 
+  // : 0;
  const allocatedPercentage=useMemo(() => (
       items.reduce((acc, item) => acc + Number(item.allocation), 0)
 
@@ -31,7 +31,7 @@ const stars='****'
 
   const distributedPlans = (items as cardItems[]).map((item) => {
     const allocation = Number(item.allocation ?? 0) / 100; 
-    const allocatedAmount = totalSaved * allocation; 
+    const allocatedAmount = mainsavings?.amount * allocation; 
 
     return {
       ...item,
@@ -41,12 +41,13 @@ const stars='****'
   });
 
   
-const savingsBalance=loadingSavings? stars: savings.length > 0? (savings[0])["Savings"] : 0
+const savingsBalance=loadingSavings? stars:mainsavings?.amount;
 
 const remainingBalance = useMemo(() => {
   if (!savingsBalance || isNaN(Number(savingsBalance))) return 0;
   const totalBalance = Number(savingsBalance);
   const used = (allocatedPercentage / 100) * totalBalance;
+  console.log("used",used)
   return Math.max(0, totalBalance - used);
 }, [savingsBalance, allocatedPercentage]);
 
@@ -96,7 +97,7 @@ const remainingBalance = useMemo(() => {
 
      
          <div className="flex-1">
-                                                    {/* workOnthis */}
+                          
           <TopCard icon={<Plus size={16}/>}
   
           Title={"Savings Balance"}  balance={`₦  ${Number(remainingBalance).toLocaleString("en-US")}`}
@@ -110,20 +111,20 @@ const remainingBalance = useMemo(() => {
         </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-4 mt-4">
-   {distributedPlans.map((plan, idx) => (
-          <Card
+   {distributedPlans.map((plan, idx) => {
+        return(  <Card
             key={plan.id || idx}
             id={plan.id}
             ItemName={plan.item}
             target={plan.target}
             completed={plan.status}
-            AmmountSaved={plan.newBalance} 
+            AmmountSaved={plan.allocatedAmount} 
             allocatedPercentage={plan.allocation}
             isGettingData={isGettingData}
             remainingBalance={remainingBalance}
            
-          />
-        ))}
+          />)
+})}
       </div>      
     </div>
   );

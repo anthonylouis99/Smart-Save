@@ -52,21 +52,12 @@ const onSubmit = async (data: FundFormData) => {
   const amountToSave = Number(data.amount);
 
   try {
+
+
+    
     await runTransaction(db, async (transaction) => {
-      const mainBalanceRef = doc(
-        db,
-        "users",
-        user.uid,
-        "DashboardData",
-        "bwt4qc3UF3IzKlfWRv0E"
-      );
-      const savingsRef = doc(
-        db,
-        "users",
-        user.uid,
-        "Savings",
-        "16a9hCWLD3B8HeTjdveH"
-      );
+      const mainBalanceRef = doc( db,"users", user.uid,"dashboard/MainBalance" );
+      const savingsRef = doc( db,"users", user.uid,"dashboard/SavingsBalance");
 
 
       const [mainSnap, savingsSnap] = await Promise.all([
@@ -78,9 +69,9 @@ const onSubmit = async (data: FundFormData) => {
         throw new Error("Main balance not found");
       }
 
-      const currentBalance = mainSnap.data()["Main-balance"] ?? 0;
+      const currentBalance = mainSnap.data().amount?? 0;
       const currentSavings = savingsSnap.exists()
-        ? savingsSnap.data()["Savings"] ?? 0
+        ? savingsSnap.data().amount ?? 0
         : 0;
 
 
@@ -90,13 +81,13 @@ const onSubmit = async (data: FundFormData) => {
 
 
       transaction.update(mainBalanceRef, {
-        "Main-balance": currentBalance - amountToSave,
+       amount: currentBalance - amountToSave,
       });
 
       transaction.set(
         savingsRef,
         {
-          Savings: currentSavings + amountToSave,
+          amount: currentSavings + amountToSave,
           note: data.note,
         },
         { merge: true }
@@ -118,11 +109,6 @@ const onSubmit = async (data: FundFormData) => {
 }
 
 };
-
-
-
-
-
 
   return (
     <div className="flex justify-center items-center px-4">

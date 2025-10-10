@@ -27,10 +27,12 @@ export function Dashboard() {
 
 // Use useEffect and useState to handle async data fetching
 
-const{items,isLoading,}=useGetItems({itemGetter:'DashboardData'})
-const{items:smallCardItems,isLoading:loadingSmallCards,}=useGetItems({itemGetter:'SmallCardsItems'})
-const{items:savings,isLoading:loadingSavings,}=useGetItems({itemGetter:'Savings'})
-
+const{items:dashboardItems,isLoading,}=useGetItems({itemGetter:'dashboard'})
+const{items:smallCardItems,isLoading:loadingSmallCards,}=useGetItems({itemGetter:"dashboard/Plans/items"})
+// const{items:savings,isLoading:loadingSavings,}=useGetItems({itemGetter:'Savings'})
+const mainBalance = dashboardItems.find(item => item.id === "MainBalance");
+const mainsavings = dashboardItems.find(item => item.id === "SavingsBalance");
+const investment = dashboardItems.find(item => item.id === "InvestmentBalance");
 
 const {user}=useAuth()
 const navigate =useNavigate()
@@ -63,10 +65,15 @@ const navigate =useNavigate()
     accessorKey: 'id',
   },
 ]
-console.log('this is items',smallCardItems);
-console.log('this is items',items);
+// console.log('this is items',smallCardItems);
+console.log('this is dashboardItems',dashboardItems);
 
 const stars='****'
+
+
+console.log('this is mainBalance',mainBalance);
+console.log('this is savings',mainsavings);
+console.log('this is investment',investment);
 
 const colors=[' var(--card-background-light)',' var(--card2-background-light)',' var(--card3-background-light)',' var(--card4-background-light)',]
 
@@ -96,9 +103,7 @@ Hello {user?.displayName || "Guest"}, Good Morning
 icon={<Plus size={16}/>}
 onclick={()=>navigate('/add-fund')}
   Title="Total Balance"
-  balance={ isLoading? stars: items.length > 0? (items[0])["Main-balance"] : 0
-
-  }
+  balance={ isLoading? stars: mainBalance?.amount}
   buttonText="Add fund"
       currency={true}
 /> 
@@ -109,15 +114,13 @@ onclick={()=>navigate('/add-fund')}
      
      className="border-r border-gray-200 flex-1 pr-2"><TopCard icon={<Plus size={16}/>}currency={true} onclick={()=>navigate('/add-savings')} buttonText="Save"
       className={'bg-[var(--card-background-light)] rounded-l-lg'} Title={"Total Savings"} 
-       balance={ loadingSavings? stars: savings.length > 0? (savings[0])["Savings"] : 0
-  }
+       balance={ isLoading? stars: mainsavings?.amount }
   underText={'save some more'}/></div>
    <div className="flex-1"><TopCard  icon={<Plus size={16}/>} currency={true} onclick={()=> {navigate('/invest')
 
-    console.log('i was clicked');
+    // console.log('i was clicked');
     
-   }}Title={"Investments"}  balance={ isLoading? stars: items.length > 0? (items[0])["investments"] : 0
-  }
+   }}Title={"Investments"}  balance={ isLoading? stars:investment?.amount }
 
   buttonText="invest"
   /></div>

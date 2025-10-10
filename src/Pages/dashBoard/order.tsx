@@ -34,8 +34,8 @@ export function Orders() {
 const navigate = useNavigate();
 
 
-const{CreateCard,isLoading}=useCreateCard({createItem:'SmallCardsItems'})
-const{items}=useGetItems({itemGetter:"SmallCardsItems"})
+const{CreateCard,isLoading}=useCreateCard({createItem:'Plans/items'})
+const{items}=useGetItems({itemGetter:"dashboard/Plans/items"})
 
  const allocatedPercentage=useMemo(() => (
       items.reduce((acc, item) => acc + Number(item.allocation), 0)
@@ -44,13 +44,16 @@ const{items}=useGetItems({itemGetter:"SmallCardsItems"})
 
 
   const onSubmit = async (data:FormData) => { 
-    if (Number(data.allocation) +allocatedPercentage> 100  )return(
+        if(Number(data.allocation) - allocatedPercentage===0)return(
+        toast.error("You have used 100% allocation")
+       )
+    if (Number(data.allocation) + allocatedPercentage> 100  )return(
       toast.error(`can't allocate more that ${100-allocatedPercentage} %`)
     )
 
   try {
       await CreateCard({
-        allocation:data?.allocation,
+        allocation:Number(data?.allocation),
         item: data?.item,
         target: data?.Target,
       });
@@ -74,6 +77,10 @@ toast.error("Failed to add Plan. Please try again.");
       
   })
   }
+
+
+  console.log("this is Items",items);
+  
 
   return (
      <div className="flex justify-center items-center px-4">

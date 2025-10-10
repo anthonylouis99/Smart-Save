@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { doc, updateDoc, increment } from "firebase/firestore";
+import { doc, updateDoc,increment } from "firebase/firestore";
 import { db } from "../../../FireBase";
 
 type UpdateCardOptions = {
   itemGetter: string;
-  docId: string;
+  docId?: string;
+
 };
 
 type UpdateParams = {
@@ -17,7 +18,7 @@ type UpdateParams = {
   operation?: "add" | "subtract" | "set";
 };
 
-export const useUpdateCard = ({ itemGetter, docId }: UpdateCardOptions) => {
+export const useUpdateCard = ({ itemGetter }: UpdateCardOptions) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<void, Error, UpdateParams>({
@@ -30,7 +31,7 @@ export const useUpdateCard = ({ itemGetter, docId }: UpdateCardOptions) => {
     }) => {
       if (!userId) throw new Error("No user ID provided");
 
-      const ref = doc(db, "users", userId, itemGetter, docId);
+      const ref = doc(db, "users", userId, itemGetter);
 
       const updateData: any = { ...extras };
 
@@ -43,7 +44,7 @@ export const useUpdateCard = ({ itemGetter, docId }: UpdateCardOptions) => {
       }
 
 
-await updateDoc(ref, updateData as any);
+   await updateDoc(ref, updateData as any);
 
 
       console.log(`Updated ${field} for user ${userId}: ${operation} ${amount}`);

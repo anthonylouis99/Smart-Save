@@ -6,10 +6,10 @@ export const useDeleteItem = () => {
   const queryClient = useQueryClient();
 
   // The actual delete function
-  const deleteItemFn = async ({ userId, id }: { userId: string; id: string }) => {
+  const deleteItemFn = async ({ userId, id,path }: { userId: string; id: string,path:string }) => {
     if (!userId) throw new Error("No user ID provided");
 
-    await deleteDoc(doc(db, "users", userId, "SmallCardsItems", id));
+    await deleteDoc(doc(db, "users", userId, path, id));
     console.log("Item deleted with id:", id);
   };
 

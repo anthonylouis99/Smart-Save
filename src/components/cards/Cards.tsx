@@ -92,7 +92,7 @@ export const TopCard = ({
        
         <div className=" mt-auto">
           <small>{Title ? Title : "Total Balance"}</small>
-          <p className="font-bold text-xl">{currency&& "₦"} {balance?.toLocaleString() || "00.00"}</p>
+          <p className="font-bold text-xl">{currency && "₦"} {balance?.toLocaleString() || "00.00"}</p>
           <small>
             <span>{precentage}</span> {underText ? underText : ""}
           </small>

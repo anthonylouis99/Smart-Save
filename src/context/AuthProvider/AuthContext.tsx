@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { onAuthStateChanged, signOut, type User } from "firebase/auth";
 import { auth } from "../../FireBase";
+import { DefaultData } from "./defaultdata";
 
 type AuthContextType = {
   user: User | null;
@@ -17,19 +18,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      setUser(firebaseUser);
-      setLoading(false);
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      try {
+        if (firebaseUser) {
+          setUser(firebaseUser);
+          await DefaultData(firebaseUser); 
+        } else {
+          setUser(null);
+        }
+      } catch (error) {
+        console.error("Error initializing user data:", error);
+      } finally {
+        setLoading(false); 
+      }
     });
-
     return () => unsubscribe();
   }, []);
 
   const logout = async () => {
     await signOut(auth);
   };
-  console.log("this is auth", auth);
-  //   console.log('this is auth',auth);
 
   return (
     <AuthContext.Provider value={{ user, loading, logout }}>
@@ -38,4 +46,4 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
-export {AuthContext}
+export { AuthContext };

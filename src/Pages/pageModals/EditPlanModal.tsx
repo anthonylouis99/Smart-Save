@@ -1,4 +1,5 @@
-// import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useMemo } from "react";
 import PopOverModal from "../../components/common/Modal/modal";
 import Input from "../../components/Input/Input";
 import { useUpdateCard } from "../../components/hooks/fireBaseFunctions/updateFile";
@@ -10,15 +11,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useGetItems } from "../../components/hooks/fireBaseFunctions/getFile";
 
 
-
-export const EditCardModal=({isOpen,onclose,id,isloading}:{onclose:()=>void,isOpen:boolean,id:string,isloading:boolean})=>{
+export const EditCardModal=({isOpen,onclose,id,isloading,singleItem}:{onclose:()=>void,isOpen:boolean,id:string,isloading:boolean,singleItem:any })=>{
+  const{items,refetch}=useGetItems({itemGetter:"dashboard/Plans/items"})
+    // const{items:item}=useGetItems({itemGetter:`dashboard/Plans/items/${id}`})
 
 const fundSchema = z.object({
   Name: z.string() .min(1, "Name is required"),
   Target: z.string().min(1, "Source is required"),
-    Percentage: z
-    .string()
-    .min(1, "Percentage is required")
+  Percentage: z .string() .min(1, "Percentage is required")
     .refine(
       (val) => {
         const num = Number(val);
@@ -26,14 +26,20 @@ const fundSchema = z.object({
       },
       { message: "Percentage must be between 1 and 100" })
 });
-const {refetch}=useGetItems({itemGetter:'SmallCardsItems'})
 
+ const allocatedPercentage=useMemo(() => (
+      items.reduce((acc, item) => acc + Number(item.allocation), 0)
+
+    ), [items])
 const { updateCard, isLoading, error } = useUpdateCard({
-    itemGetter: "SmallCardsItems",
-    docId: id, 
+    itemGetter:  `dashboard/Plans/items/${id}`,
   });
   const {user}=useAuth()
 type FundFormData = z.infer<typeof fundSchema>;
+
+const MainsingleItem = singleItem.find((item: { id: string; }) => item.id === id);
+const singleItemAllocation=MainsingleItem?.allocation
+// console.log("This is Main",);
 
 
   const {
@@ -46,10 +52,19 @@ type FundFormData = z.infer<typeof fundSchema>;
   });
 
   const handelUpdate=(async (data:FundFormData) =>{
+    const updateAllocation=Number(data.Percentage) 
    
-     if (!user?.uid) {
-      toast.error("User not authenticated.");
-      return;}
+     if (!user?.uid) {toast.error("User not authenticated.");return}
+ if (allocatedPercentage===100 && updateAllocation>singleItemAllocation)return(
+          toast.error("You have used 100% allocation")
+       )
+
+        if( updateAllocation>singleItemAllocation && updateAllocation-singleItemAllocation+allocatedPercentage>100)return(
+        toast.error(`You can't allocate more than ${100-allocatedPercentage} % more`)
+       )
+       
+      
+     
 
     try {
       await updateCard(
@@ -88,8 +103,6 @@ type FundFormData = z.infer<typeof fundSchema>;
               <p className="text-red-500 text-sm">{errors.Name.message}</p>
             )}
           </div>
-
-
           <div>
            
             <Input
@@ -102,13 +115,12 @@ type FundFormData = z.infer<typeof fundSchema>;
               <p className="text-red-500 text-sm">{errors.Target.message}</p>
             )}
           </div>
-
           <div>
            
             <Input
             label="Percentage"
               type="number"
-              placeholder="10-100 %"
+              placeholder={singleItemAllocation}
               {...register("Percentage")}
             />
             {errors.Percentage && (
