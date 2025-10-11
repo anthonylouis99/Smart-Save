@@ -60,9 +60,14 @@ export const TopCard = ({
   buttonText,
   onclick,
   currency,
-  icon
+  icon,
+  secondButton,
+  secondButtonText,
+  onclickTwo,
 }: {
   Title?: string;
+  secondButtonText?:string
+  secondButton?:boolean;
   icon?:ReactNode;
   balance?: string|number;
   underText?: string;
@@ -71,6 +76,7 @@ export const TopCard = ({
   buttonText?:string;
   currency?:boolean
   onclick?:()=>void
+    onclickTwo?:()=>void
 }) => {
   return (
     <div
@@ -81,10 +87,14 @@ export const TopCard = ({
     >
       <div className="flex flex-col justify-between w-full gap-4 text-[var(--card-text)]">
         {buttonText&&
-        <div className="w-full flex justify-end ">
+        <div className="w-full flex gap-2 justify-end ">
           <Button leftIcon={icon} onClick={onclick} className="flex items-center justify-center">
           {buttonText}
           </Button>
+
+           { secondButton&&<Button variant="secondary" onClick={onclickTwo}>
+        {secondButtonText}
+        </Button>}
              
         </div>
         }

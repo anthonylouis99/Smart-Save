@@ -95,7 +95,7 @@ const passwordValue = watch("password");
             </div>
         
         <div className=" w-full flex justify-center transition-all duration-300 text-2xl">
-         <img  className="h-[120px] w-[120px] md:h-[160px] md:w-[160px] lg:h-[200px] lg:w-[200px]" src="/logo.png" alt=" Logo" />   
+            <img  className="h-[80px] w-[120px] md:h-[160px] md:w-[160px] lg:h-[200px] lg:w-[200px]" src="/logo.png" alt=" Logo" />   
          </div>
    
           

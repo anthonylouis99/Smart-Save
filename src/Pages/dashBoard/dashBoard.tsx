@@ -10,6 +10,8 @@ import Button from "../../components/common/Button/Button";
 import { useAuth } from "../../context/AuthProvider/auth";
 import { useGetItems } from "../../components/hooks/fireBaseFunctions/getFile";
 import { useNavigate } from "react-router-dom";
+import { DashboardHeader } from "../../components/Headers/dashBoardHeader";
+import toast from "react-hot-toast";
 
 
   export type cardItems = {
@@ -82,16 +84,9 @@ const colors=[' var(--card-background-light)',' var(--card2-background-light)','
 
 {/* {top Element} */}
   <div className=" flex flex-col gap-6 border-b border-gray-200">
-<div >
-<p className="text-2xl font-bold"> 
-Hello {user?.displayName || "Guest"}, Good Morning
-</p>
 
-<p>
-  Lets check your Savings
-</p>
 
-</div>
+    <DashboardHeader title={`Hello ${user?.displayName || "Guest"}`} highlight="Lets check your Savings"/>
 
 <div className=" grid md:grid-cols-3 gap-2 pb-8">
 
@@ -101,17 +96,20 @@ Hello {user?.displayName || "Guest"}, Good Morning
 <TopCard
 icon={<Plus size={16}/>}
 onclick={()=>navigate('/add-fund')}
+onclickTwo={()=>(toast.error("can't Withdraw yet"))}
   Title="Total Balance"
   balance={ isLoading? stars: mainBalance?.amount}
   buttonText="Add fund"
       currency={true}
+  secondButton secondButtonText="Withdraw"
 /> 
   
   
   </div>
       <div 
      
-     className="border-r border-gray-200 flex-1 pr-2"><TopCard icon={<Plus size={16}/>}currency={true} onclick={()=>navigate('/add-savings')} buttonText="Save"
+     className="border-r border-gray-200 flex-1 pr-2">
+      <TopCard icon={<Plus size={16}/>}currency={true} onclick={()=>navigate('/add-savings')} buttonText="Save" 
       className={'bg-[var(--card-background-light)] rounded-l-lg'} Title={"Total Savings"} 
        balance={ isLoading? stars: mainsavings?.amount }
   underText={'save some more'}/></div>
@@ -128,7 +126,7 @@ onclick={()=>navigate('/add-fund')}
   </div>
 
   {/* {Crads and investments} */}
-<div className="grid md:grid-cols-2"> 
+<div className="grid md:grid-cols-2 gap-4"> 
 {loadingSmallCards?<LoadingSpinner/>:
 <div className="flex-1 flex-col gap-4 flex border border-gray-200 rounded-lg p-4">
 <div className="w-full flex justify-between">
@@ -183,16 +181,16 @@ Your Saving Plans
 </div>
 
 
-<div className="grid md:grid-cols-2 gap-4">
-  <div className="bg-white h-[250px] sm:h-[300px] md:h-[350px] flex-1 p-4 rounded-lg shadow-lg">
+<div className="grid md:grid-cols-2 gap-4 border border-gray-200 ">
+  <div className="bg-white p-4 h-full rounded-lg ">
     <p className="text-lg font-semibold mb-4">Savings Overview</p>
     <div className="">
       <AnimatedLineChart />
     </div>
   </div>
 
-  <div className="bg-white p-4 h-[250px] sm:h-[300px] md:h-[350px] flex-1 rounded-lg shadow-lg">
-    <h2 className="text-lg font-semibold mb-4">Category Distribution</h2>
+  <div className="bg-white p-4 h-full flex-1 rounded-lg ">
+    <p className="text-lg font-semibold mb-4">Category Distribution</p>
     <div className="">
       <AnimatedBarChart />
     </div>

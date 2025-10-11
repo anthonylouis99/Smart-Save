@@ -16,7 +16,13 @@ import { useGetItems } from "../../components/hooks/fireBaseFunctions/getFile";
 
 const cardItems = z.object({
   item: z.string().min(1, "Product type is required"),
-  allocation: z.string().min(1, "Description is required"),
+  allocation: z .string() .min(1, "Percentage is required")
+    .refine(
+      (val) => {
+        const num = Number(val);
+        return !isNaN(num) && num >= 1 && num <= 100;
+      },
+      { message: "Percentage must be between 1 and 100" }),
   Target: z.string().min(1, "Product name is required"),
 });
 
@@ -121,34 +127,14 @@ toast.error("Failed to add Plan. Please try again.");
           placeholder="Target"
         />
         {errors.Target && <p className="text-red-500 text-sm">{errors.Target.message}</p>}
-
-        {/* Currency Dropdown */}
-        <div className="relative w-full">
-          <select
-            {...register("allocation")}
-            defaultValue=""
-            className="w-full appearance-none px-4 py-2 border border-gray-300 rounded-md shadow-sm pr-10 text-[var(--card-text)] focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="" disabled className="text-[var(--card-text)]">
-              Allocation
-            </option>
-            <option value="10"> % (10)</option>
-            <option value="20"> % (20)</option>
-            <option value="30"> % (30)</option>
-            <option value="40"> % (40)</option>
-            <option value="50">% (50)</option>
-            <option value="60">% (60)</option>
-            <option value="70">% (70)</option>
-            <option value="80">% (80)</option>
-            <option value="90">% (90)</option>
-            <option value="100">% (100)</option>
-          </select>
-          <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-500">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        </div>
+ 
+       
+        <Input
+        {...register("allocation")}
+          type="text"
+          placeholder="Allocate between 1-100"
+        />
+        
         {errors.allocation && <p className="text-red-500 text-sm">{errors.allocation.message}</p>}
 
 
