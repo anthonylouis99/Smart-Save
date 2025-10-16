@@ -31,7 +31,11 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <button
       className={clsx(
-        "inline-flex items-center justify-center gap-2 px-4 py-2 rounded focus:outline-none",
+          "inline-flex items-center justify-center gap-2 rounded focus:outline-none font-medium",
+          "px-3 py-2 text-sm",
+          "sm:px-2 sm:py-1 sm:text-xs",
+          "md:px-4 md:py-2 md:text-sm",
+          "lg:px-6 lg:py-3 lg:text-base",
         variantClasses[variant],
         disabled && "opacity-50 cursor-not-allowed",
         className

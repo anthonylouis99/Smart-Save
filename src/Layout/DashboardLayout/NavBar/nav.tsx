@@ -11,6 +11,8 @@ import LogOutModal from "../../../Pages/modules/auth/logOut";
 import { LogOut } from "lucide-react";
 
 
+
+
 export const NavBar = ({ image }: { image?: ReactNode }) => {
 
   const [searchBarOpen,setSearchBarOpen]=useState(true)
@@ -27,7 +29,7 @@ setDropDownOpen(false)
 },[WindowSize])
 const {user}=useAuth()
 
-
+  const activePage = navigation.find(item => item.href === location.pathname);
   return (
     <nav className="w-full bg-white shadow-sm text-gray-700 px-4 h-[var(--topNav-hight)] flex items-center relative">
       
@@ -50,10 +52,18 @@ const {user}=useAuth()
       }
     </>
   }
-                      <Dropdown propArray={navigation} showDropDown={dropDownOpen} setShowDropDown={setDropDownOpen} />
+     <Dropdown propArray={navigation} showDropDown={dropDownOpen} setShowDropDown={setDropDownOpen} />
 
         {/* Active Page */}
-        <p className=" ">Active Page</p>
+
+    <div className="text-lg font-semibold text-gray-800">
+      {activePage ? activePage.name : "Page Not Found"}
+    </div>
+
+     
+       
+
+
       </div>
 
 

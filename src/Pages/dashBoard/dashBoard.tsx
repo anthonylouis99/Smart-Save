@@ -12,6 +12,8 @@ import { useGetItems } from "../../components/hooks/fireBaseFunctions/getFile";
 import { useNavigate } from "react-router-dom";
 import { DashboardHeader } from "../../components/Headers/dashBoardHeader";
 import toast from "react-hot-toast";
+import { AddInvestmentModal } from "../pageModals/investModal";
+import { useState } from "react";
 
 
   export type cardItems = {
@@ -22,12 +24,20 @@ import toast from "react-hot-toast";
   allocation?: number;
   status?:string
 };
+export type InvestmentOption = {
+  id: string;
+  name: string;
+  interestRate: number; 
+  price?:number;
+  timeFrame?:string
+};
 
 export function Dashboard() {
 
 
 // Use useEffect and useState to handle async data fetching
-
+const[isInvestModalOpen, setIsInvestModalOpen]=useState(false)
+const[selectedInvestMent, setSelectedInvestment]=useState<InvestmentOption|null>(null)
 const{items:dashboardItems,isLoading,}=useGetItems({itemGetter:'dashboard'})
 const{items:smallCardItems,isLoading:loadingSmallCards,}=useGetItems({itemGetter:"dashboard/Plans/items"})
 // const{items:savings,isLoading:loadingSavings,}=useGetItems({itemGetter:'Savings'})
@@ -66,6 +76,13 @@ const navigate =useNavigate()
     accessorKey: 'id',
   },
 ]
+
+const investmentOptions: InvestmentOption[] = [
+  { id: "1", name: "TechGrow Inc.", interestRate: 8,price:20000,timeFrame:'5 months' },
+  { id: "2", name: "GreenFuture Energy", interestRate: 6.5,price:10000,timeFrame:'3 months'  },
+  { id: "3", name: "SafeBank Corp.", interestRate: 4,price:10000,timeFrame:'7 months' },
+  // { id: "4", name: "AgroLife Ltd.", interestRate: 7 ,price:10000 },
+];
 // console.log('this is items',smallCardItems);
 console.log('this is dashboardItems',dashboardItems);
 
@@ -100,7 +117,7 @@ onclickTwo={()=>(toast.error("can't Withdraw yet"))}
   Title="Total Balance"
   balance={ isLoading? stars: mainBalance?.amount}
   buttonText="Add fund"
-      currency={true}
+  currency={true}
   secondButton secondButtonText="Withdraw"
 /> 
   
@@ -112,7 +129,7 @@ onclickTwo={()=>(toast.error("can't Withdraw yet"))}
       <TopCard icon={<Plus size={16}/>}currency={true} onclick={()=>navigate('/add-savings')} buttonText="Save" 
       className={'bg-[var(--card-background-light)] rounded-l-lg'} Title={"Total Savings"} 
        balance={ isLoading? stars: mainsavings?.amount }
-  underText={'save some more'}/></div>
+        underText={'save some more'}/></div>
    <div className="flex-1"><TopCard  icon={<Plus size={16}/>} currency={true} onclick={()=> {navigate('/invest')
 
     // console.log('i was clicked');
@@ -120,7 +137,8 @@ onclickTwo={()=>(toast.error("can't Withdraw yet"))}
    }}Title={"Investments"}  balance={ isLoading? stars:investment?.amount }
 
   buttonText="invest"
-  /></div>
+  />
+  </div>
 </div> 
 
   </div>
@@ -142,9 +160,6 @@ Your Saving Plans
         View All
         </Button>
     </div>
-
-
-
 
 </div>
 
@@ -169,15 +184,50 @@ Your Saving Plans
 
 
 <div className="flex-1 border border-gray-200 rounded-lg p-4">
-<div>
+  <div className=" flex justify-between items-center mb-6">
+<div className=" flex flex-col gap-1 ">
   <p>Investments</p>
   <small>
     Check out our investment plans
   </small>
 </div>
+ 
+      <Button variant="secondary" onClick={()=>(navigate('/invest'))}>
+        View All
+        </Button>
+    </div>
 
+
+
+<div className=" flex flex-col gap-4">
+  {investmentOptions.map((company) => {
+  
+          return (
+            <div
+              key={company.id}
+              className="flex items-center justify-between border p-2 border-gray-200 rounded-xl shadow-sm"
+            >
+              <div className="flex flex-col gap-1">
+               
+                <span className="font-medium">{company.name}</span>
+                <span className="text-sm text-gray-500">
+                  Interest Rate: {company.interestRate}%
+                </span>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <Button
+                  type="button"
+                  onClick={() => {setIsInvestModalOpen(true); setSelectedInvestment(company)}}
+                >
+                  Invest
+                </Button>
+              </div>
+            </div>
+          );
+        })}
 </div>
-
+</div>
 </div>
 
 
@@ -196,10 +246,8 @@ Your Saving Plans
     </div>
   </div>
 </div>
-
-
+<AddInvestmentModal onClose={()=>setIsInvestModalOpen(false)} isOpen={isInvestModalOpen} isloading={false} data={selectedInvestMent as InvestmentOption }/>
 <Tables columns={columns} data={transactionData} />
-
   </div>
 
   );

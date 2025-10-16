@@ -8,6 +8,7 @@ import { useUpdateCard } from "../../components/hooks/fireBaseFunctions/updateFi
 import { useAuth } from "../../context/AuthProvider/auth"; 
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { BreadCrumbs } from "../../components/common/BreadCrums";
 
 const fundSchema = z.object({
   amount: z
@@ -19,6 +20,21 @@ const fundSchema = z.object({
   // source: z.string().min(1, "Source is required"),
   note: z.string().optional(),
 });
+
+
+  const crumPages = [
+    {
+      name: 'dashBoard',
+      href:`/dashboard`,
+      current: false,
+    },
+    {
+      name: 'AddFund',
+      href:  `/addFund`,
+      current: false,
+    },
+  
+  ];
 
 type FundFormData = z.infer<typeof fundSchema>;
 
@@ -64,8 +80,9 @@ toast.success("Fund added successfully");
   };
 
   return (
-    <div className="flex justify-center items-center px-4">
+    <div className="flex flex-col justify-center items-center px-4">
       <div className="w-full max-w-2xl bg-white rounded-2xl shadow-md p-6">
+      <BreadCrumbs className={'self-start mb-4'} page={crumPages}/>
         <h2 className="text-2xl font-bold text-gray-800 mb-4">Add Funds</h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

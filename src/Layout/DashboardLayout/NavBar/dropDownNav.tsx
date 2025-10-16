@@ -33,7 +33,7 @@ export const Dropdown = ({ propArray = [], showDropDown, setShowDropDown }: Prop
     <div ref={dropdownRef} className=" z-60 top-20 absolute w-max">
       <div
         className={`flex flex-col bg-white shadow-lg rounded-md  transition-all duration-300 ${
-          showDropDown ? "opacity-100 visible" : "opacity-0 invisible"
+          showDropDown ? "opacity-100 visible" : "opacity-0 hidden"
         }`}
       >
         {propArray.map((item, index) => (
