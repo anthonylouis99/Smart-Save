@@ -11,7 +11,7 @@ import { useAuth } from "../../context/AuthProvider/auth";
 import { useGetItems } from "../../components/hooks/fireBaseFunctions/getFile";
 import { useNavigate } from "react-router-dom";
 import { DashboardHeader } from "../../components/Headers/dashBoardHeader";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 import { AddInvestmentModal } from "../pageModals/investModal";
 import { useState } from "react";
 
@@ -113,12 +113,13 @@ const colors=[' var(--card-background-light)',' var(--card2-background-light)','
 <TopCard
 icon={<Plus size={16}/>}
 onclick={()=>navigate('/add-fund')}
-onclickTwo={()=>(toast.error("can't Withdraw yet"))}
+onclickTwo={()=>navigate('/withdraw')}
   Title="Total Balance"
   balance={ isLoading? stars: mainBalance?.amount}
   buttonText="Add fund"
   currency={true}
-  secondButton secondButtonText="Withdraw"
+   secondButtonText="Withdraw"
+   secondButton
 /> 
   
   

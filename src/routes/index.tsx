@@ -20,6 +20,8 @@ import ProtectedRoute from "./protectedRoute";
 import Investments from "../Pages/dashBoard/invest";
 import AddFund from "../Pages/dashBoard/addFund";
 import AddSavings from "../Pages/dashBoard/addSavings";
+import Withdrawal from "../Pages/dashBoard/withDrawal";
+import Error404 from "../Pages/errorPage/404";
 
 
 
@@ -129,11 +131,21 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
+   {
+    path: "/withdraw",
+    element: (
+      <ProtectedRoute>
+        <DashBoardLayout>
+          <Withdrawal />
+        </DashBoardLayout>
+      </ProtectedRoute>
+    ),
+  },
 
 
   {
     path: "*",
-    element: <Navigate to="/signIn" replace />,
+    element: <Error404 />,
   },
 ]);
 

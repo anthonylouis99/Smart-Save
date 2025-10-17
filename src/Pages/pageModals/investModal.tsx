@@ -146,6 +146,78 @@ export const AddInvestmentModal = ({isOpen,onClose, data, }:{onClose:()=>void,is
 //       });
 
 
+// tyy using This intead
+
+// const onSubmit = async (data: FundFormData) => {
+// //   console.log(data.source);
+  
+//     setisLoading(true)
+//   if (!user) return;
+//   const amountToSave = Number(data.amount);
+
+//   try {
+
+
+    
+//     await runTransaction(db, async (transaction) => {
+//       const mainBalanceRef = doc( db,"users", user.uid,"dashboard/MainBalance" );
+//       const investmentRef = doc( db,"users", user.uid,"dashboard/InvestmentBalance");
+
+
+//       const [mainSnap, savingsSnap] = await Promise.all([
+//         transaction.get(mainBalanceRef),
+//         transaction.get(investmentRef),
+//       ]);
+
+//       if (!mainSnap.exists()) {
+//          setisLoading(false)
+//         throw new Error("Main balance not found");
+//       }
+
+//       const currentBalance = mainSnap.data().amount?? 0;
+//       const currentSavings = savingsSnap.exists()
+//         ? savingsSnap.data().amount ?? 0
+//         : 0;
+
+
+//       if (amountToSave > currentBalance) {
+//         setisLoading(false)
+//         throw new Error("Insufficient balance");
+        
+//       }
+
+
+//       transaction.update(mainBalanceRef, {
+//        amount: currentBalance - amountToSave,
+//       });
+
+//       transaction.set(
+//         investmentRef,
+//         {
+//           amount: currentSavings + amountToSave,
+//           note: data.bank+' '+data.bankAccount,
+//         },
+//         { merge: true }
+//       );
+//     });
+
+//     toast.success("Fund added successfully");
+//     navigate("/dashboard", { replace: true });
+//     reset();
+//       setisLoading(false)
+// } catch (err: unknown) {
+//   if (err instanceof Error) {
+//     console.error(err);
+//     toast.error(err.message);
+//   } else {
+//     console.error("Unexpected error:", err);
+//     toast.error("Failed to update balances.");
+//   }
+// }
+
+// };
+
+
   return (
    
         <PopOverModal isOpen={isOpen} title={"Invest"}  onClose={onClose} 
